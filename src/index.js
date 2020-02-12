@@ -10,27 +10,22 @@ function Square(props) {
   );
 }
 
-class Board extends React.Component {
-  renderSquare(i) {
-    return <Square key={i} value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
-  }
-
-  render() {
-    const indexes = [0, 1, 2, 3];
-    return (
-      <div className="board">
-        {indexes.map((row, _) => {
-          return (
-            <div key={row} className="board-row">
-              {indexes.map((col, _) => {
-                return this.renderSquare(row*indexes.length + col);
-              })}
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
+function Board(props) {
+  const indexes = [0, 1, 2, 3];
+  return (
+    <div className="board">
+      {indexes.map((row, _) => {
+        return (
+          <div key={row} className="board-row">
+            {indexes.map((col, _) => {
+              const i = row*indexes.length + col;
+              return <Square key={i} value={props.squares[i]} onClick={() => props.onClick(i)} />;
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 class Game extends React.Component {
@@ -61,7 +56,7 @@ class Game extends React.Component {
       xIsNext: !this.state.xIsNext,
     });
   }
-  
+
   jumpTo(step) {
     this.setState({
       stepNumber: step,
@@ -73,7 +68,7 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
-    
+
     const moves = history.map((step, move) => {
       const desc = move ?
         'Go to move #' + move :
@@ -95,7 +90,7 @@ class Game extends React.Component {
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
-    
+
     return (
       <div className="game">
         <div className="game-board">
