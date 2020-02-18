@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BsHeartFill} from 'react-icons/bs';
 import './index.css';
 
 function Square(props) {
@@ -47,7 +48,7 @@ class Game extends React.Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    squares[i] = this.state.xIsNext ? 'X' : <BsHeartFill/>;
     this.setState({
       history: history.concat([{
         squares: squares,
@@ -88,7 +89,7 @@ class Game extends React.Component {
     if (winner) {
       status = 'Winner: ' + winner;
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : <BsHeartFill/>);
     }
 
     return (
